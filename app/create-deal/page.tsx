@@ -10,7 +10,6 @@ export const dynamic = 'force-dynamic';
 export default function CreateDeal() {
   const router = useRouter();
   const [deal, setDeal] = useState<Deal | null>(null);
-  const [isClient, setIsClient] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -26,35 +25,31 @@ export default function CreateDeal() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
+    // Get deal data from URL query params (client-side only)
+    const urlParams = new URLSearchParams(window.location.search);
+    const dealData = urlParams.get('deal');
     
-    // Get deal data from URL query params
-    if (typeof window !== 'undefined') {
-      const urlParams = new URLSearchParams(window.location.search);
-      const dealData = urlParams.get('deal');
-      
-      if (dealData) {
-        setIsLoading(true);
-        try {
-          const parsedDeal = JSON.parse(dealData);
-          setDeal(parsedDeal);
-          
-          // Pre-fill form with deal data
-          setFormData({
-            title: parsedDeal.deal_title,
-            description: parsedDeal.description,
-            original_price: parsedDeal.original_price,
-            current_price: parsedDeal.current_price,
-            discount: parsedDeal.original_price - parsedDeal.current_price,
-            currency: parsedDeal.currency,
-            location: parsedDeal.location,
-            valid_until: ''
-          });
-        } catch (error) {
-          console.error('Error parsing deal data:', error);
-        } finally {
-          setIsLoading(false);
-        }
+    if (dealData) {
+      setIsLoading(true);
+      try {
+        const parsedDeal = JSON.parse(dealData);
+        setDeal(parsedDeal);
+        
+        // Pre-fill form with deal data
+        setFormData({
+          title: parsedDeal.deal_title,
+          description: parsedDeal.description,
+          original_price: parsedDeal.original_price,
+          current_price: parsedDeal.current_price,
+          discount: parsedDeal.original_price - parsedDeal.current_price,
+          currency: parsedDeal.currency,
+          location: parsedDeal.location,
+          valid_until: ''
+        });
+      } catch (error) {
+        console.error('Error parsing deal data:', error);
+      } finally {
+        setIsLoading(false);
       }
     }
   }, []);
@@ -125,17 +120,6 @@ export default function CreateDeal() {
       </button>
     </div>
   );
-
-  if (!isClient) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
-        </div>
-      </div>
-    );
-  }
 
   if (isLoading) {
     return (
