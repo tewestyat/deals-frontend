@@ -10,6 +10,7 @@ export const dynamic = 'force-dynamic';
 export default function CreateDeal() {
   const router = useRouter();
   const [deal, setDeal] = useState<Deal | null>(null);
+  const [isClient, setIsClient] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -25,6 +26,8 @@ export default function CreateDeal() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
+    
     // Get deal data from URL query params
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search);
@@ -122,6 +125,17 @@ export default function CreateDeal() {
       </button>
     </div>
   );
+
+  if (!isClient) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (

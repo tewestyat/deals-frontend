@@ -1,11 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: 'export',
-  trailingSlash: true,
-  images: {
-    unoptimized: true
-  }
+  // Keep default Next.js behavior for better deployment compatibility
 };
 
 export default nextConfig;
