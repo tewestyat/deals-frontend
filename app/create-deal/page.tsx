@@ -93,7 +93,7 @@ export default function CreateDeal() {
   const PreviewDealCard = () => (
     <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
       <h3 className="text-lg font-semibold text-gray-800 mb-2">Preview</h3>
-      <h4 className="text-xl font-bold text-blue-600 mb-2">{formData.title || 'Deal Title'}</h4>
+      <h4 className="text-xl font-bold text-purple-600 mb-2">{formData.title || 'Deal Title'}</h4>
       <p className="text-gray-600 mb-4">{formData.description || 'Deal description will appear here...'}</p>
       
       <div className="flex justify-between items-center mb-4">
@@ -115,7 +115,7 @@ export default function CreateDeal() {
         <p>📅 {formData.valid_until ? `Valid until ${new Date(formData.valid_until).toLocaleDateString()}` : 'Valid until 2 weeks from now'}</p>
       </div>
       
-      <button className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors">
+      <button className="w-full bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 transition-colors">
         Create Deal
       </button>
     </div>
@@ -125,7 +125,7 @@ export default function CreateDeal() {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading deal data...</p>
         </div>
       </div>
@@ -179,7 +179,7 @@ export default function CreateDeal() {
                   value={formData.title}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white text-gray-900"
                   placeholder="Enter deal title"
                 />
               </div>
@@ -196,7 +196,7 @@ export default function CreateDeal() {
                   onChange={handleInputChange}
                   required
                   rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white text-gray-900"
                   placeholder="Describe your deal"
                 />
               </div>
@@ -216,7 +216,7 @@ export default function CreateDeal() {
                     required
                     min="0"
                     step="0.01"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white text-gray-900"
                     placeholder="0.00"
                   />
                 </div>
@@ -233,7 +233,7 @@ export default function CreateDeal() {
                     onChange={handleInputChange}
                     min="0"
                     step="0.01"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white text-gray-900"
                     placeholder="0.00"
                   />
                 </div>
@@ -251,7 +251,7 @@ export default function CreateDeal() {
                     required
                     min="0"
                     step="0.01"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white text-gray-900"
                     placeholder="0.00"
                   />
                 </div>
@@ -268,7 +268,7 @@ export default function CreateDeal() {
                     name="currency"
                     value={formData.currency}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white text-gray-900"
                   >
                     <option value="ETB">ETB (Ethiopian Birr)</option>
                     <option value="SEK">SEK (Swedish Krona)</option>
@@ -287,7 +287,7 @@ export default function CreateDeal() {
                     name="location"
                     value={formData.location}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white text-gray-900"
                     placeholder="City, Country"
                   />
                 </div>
@@ -304,7 +304,7 @@ export default function CreateDeal() {
                   name="valid_until"
                   value={formData.valid_until}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white text-gray-900"
                 />
               </div>
 
@@ -312,7 +312,7 @@ export default function CreateDeal() {
               <div className="flex gap-4 pt-6">
                 <button
                   type="submit"
-                  className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors shadow-sm"
+                  className="flex-1 bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 transition-colors shadow-sm"
                 >
                   Create Deal
                 </button>

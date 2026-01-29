@@ -43,7 +43,7 @@ export default function Home() {
     return (
       <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
         <h3 className="text-lg font-semibold text-gray-800 mb-2">{title}</h3>
-        <h4 className="text-xl font-bold text-blue-600 mb-2">{deal.deal_title}</h4>
+        <h4 className="text-xl font-bold text-purple-600 mb-2">{deal.deal_title}</h4>
         <p className="text-gray-600 mb-4">{deal.description}</p>
         
         <div className="flex justify-between items-center mb-4">
@@ -70,7 +70,7 @@ export default function Home() {
           className={`w-full py-2 px-4 rounded transition-colors ${
             navigateToCreate 
               ? 'bg-green-600 text-white hover:bg-green-700' 
-              : 'bg-blue-600 text-white hover:bg-blue-700'
+              : 'bg-purple-600 text-white hover:bg-purple-700'
           }`}
         >
           {buttonText || deal.primary_button_text}
@@ -97,7 +97,7 @@ export default function Home() {
                 id="business"
                 value={selectedBusiness}
                 onChange={(e) => setSelectedBusiness(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white text-gray-900"
               >
                 {BUSINESSES.map((business) => (
                   <option key={business.id} value={business.id}>
@@ -117,7 +117,7 @@ export default function Home() {
                 value={clientId}
                 onChange={(e) => setClientId(e.target.value)}
                 placeholder="e.g., client_005"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900 placeholder-gray-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white text-gray-900 placeholder-gray-500"
               />
             </div>
             
@@ -125,7 +125,7 @@ export default function Home() {
               <button
                 onClick={handleGetRecommendations}
                 disabled={loading}
-                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 disabled:bg-gray-400 transition-colors shadow-sm"
+                className="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 disabled:bg-gray-400 transition-colors shadow-sm"
               >
                 {loading ? 'Loading...' : 'Get Recommendations'}
               </button>
