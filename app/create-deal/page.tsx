@@ -19,30 +19,36 @@ export default function CreateDeal() {
   });
 
   const [showPreview, setShowPreview] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     // Get deal data from URL query params
-    const urlParams = new URLSearchParams(window.location.search);
-    const dealData = urlParams.get('deal');
-    
-    if (dealData) {
-      try {
-        const parsedDeal = JSON.parse(dealData);
-        setDeal(parsedDeal);
-        
-        // Pre-fill form with deal data
-        setFormData({
-          title: parsedDeal.deal_title,
-          description: parsedDeal.description,
-          original_price: parsedDeal.original_price,
-          current_price: parsedDeal.current_price,
-          discount: parsedDeal.original_price - parsedDeal.current_price,
-          currency: parsedDeal.currency,
-          location: parsedDeal.location,
-          valid_until: ''
-        });
-      } catch (error) {
-        console.error('Error parsing deal data:', error);
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const dealData = urlParams.get('deal');
+      
+      if (dealData) {
+        setIsLoading(true);
+        try {
+          const parsedDeal = JSON.parse(dealData);
+          setDeal(parsedDeal);
+          
+          // Pre-fill form with deal data
+          setFormData({
+            title: parsedDeal.deal_title,
+            description: parsedDeal.description,
+            original_price: parsedDeal.original_price,
+            current_price: parsedDeal.current_price,
+            discount: parsedDeal.original_price - parsedDeal.current_price,
+            currency: parsedDeal.currency,
+            location: parsedDeal.location,
+            valid_until: ''
+          });
+        } catch (error) {
+          console.error('Error parsing deal data:', error);
+        } finally {
+          setIsLoading(false);
+        }
       }
     }
   }, []);
@@ -114,7 +120,7 @@ export default function CreateDeal() {
     </div>
   );
 
-  if (!deal && window.location.search.includes('deal')) {
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="text-center">
