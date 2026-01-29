@@ -1,9 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { getRecommendations, BUSINESSES, Deal, RecommendationResponse } from '@/lib/api';
 
 export default function Home() {
+  const router = useRouter();
   const [selectedBusiness, setSelectedBusiness] = useState(BUSINESSES[0].id);
   const [clientId, setClientId] = useState('client_005');
   const [recommendations, setRecommendations] = useState<RecommendationResponse | null>(null);
@@ -34,7 +36,7 @@ export default function Home() {
       if (navigateToCreate) {
         // Navigate to create-deal page with deal data
         const dealData = encodeURIComponent(JSON.stringify(deal));
-        window.location.href = `/create-deal?deal=${dealData}`;
+        router.push(`/create-deal?deal=${dealData}`);
       }
     };
 
