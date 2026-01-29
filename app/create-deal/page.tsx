@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Deal } from '@/lib/api';
 
+// Force dynamic rendering to prevent SSR issues
+export const dynamic = 'force-dynamic';
+
 export default function CreateDeal() {
   const router = useRouter();
   const [deal, setDeal] = useState<Deal | null>(null);
