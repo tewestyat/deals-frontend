@@ -25,6 +25,9 @@ export const useAppContext = () => {
   return context;
 };
 
+// Export the context for TypeScript
+export { AppContext };
+
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [mode, setMode] = useState<'business' | 'client' | null>(null);
   const [businessId, setBusinessId] = useState<string | null>(null);
