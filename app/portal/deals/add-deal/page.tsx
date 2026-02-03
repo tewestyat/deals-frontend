@@ -35,8 +35,12 @@ const AddDeal = () => {
 
   useEffect(() => {
     setMounted(true);
-    // Load recommendations automatically when component mounts
-    loadRecommendations();
+    // Show loading state immediately
+    setLoadingRecommendations(true);
+    // Load recommendations with a small delay to show loading state
+    setTimeout(() => {
+      loadRecommendations();
+    }, 500);
   }, []);
 
   const loadRecommendations = async () => {
@@ -362,6 +366,17 @@ const AddDeal = () => {
       </div>
 
       {/* AI Recommendations Section - Moved to Bottom */}
+      {loadingRecommendations && (
+        <div className="mt-12 max-w-7xl mx-auto">
+          <div className="bg-linear-to-r from-purple-50 to-blue-50 rounded-lg p-6 border border-purple-200">
+            <div className="flex justify-center items-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mr-3"></div>
+              <span className="text-gray-600">Loading AI recommendations...</span>
+            </div>
+          </div>
+        </div>
+      )}
+      
       {showRecommendations && recommendations.length > 0 && (
         <div className="mt-12 max-w-7xl mx-auto">
           <div className="bg-linear-to-r from-purple-50 to-blue-50 rounded-lg p-6 border border-purple-200">
