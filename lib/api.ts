@@ -25,6 +25,12 @@ export interface Business {
   description: string;
 }
 
+export interface PassportResponse {
+  client_id: string;
+  category: string;
+  technical_briefing: string;
+}
+
 // Get recommendations from your FastAPI backend
 export async function getRecommendations(businessId: string, clientId: string): Promise<RecommendationResponse> {
   try {
@@ -52,4 +58,23 @@ export const BUSINESSES: Business[] = [
 export async function checkHealth(): Promise<{ status: string }> {
   const response = await fetch(`${API_BASE_URL}/`);
   return response.json();
+}
+
+// Get passport technical briefing from FastAPI backend
+export async function getPassportSummary(clientId: string, category: string): Promise<PassportResponse> {
+  try {
+    console.log(`🔥 Calling Passport API: ${API_BASE_URL}/api/passport/${clientId}/${category}`);
+    const response = await fetch(`${API_BASE_URL}/api/passport/${clientId}/${category}`);
+    
+    if (!response.ok) {
+      throw new Error(`Failed to get passport summary: ${response.status} ${response.statusText}`);
+    }
+    
+    const data = await response.json();
+    console.log('🔥 Passport API response:', data);
+    return data;
+  } catch (error) {
+    console.error('🔥 Error calling Passport API:', error);
+    throw error;
+  }
 }
