@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getRecommendations } from '@/lib/api';
+import { getClientJournalHistory } from '@/lib/portal-api';
 
 interface Deal {
   deal_title: string;
@@ -19,7 +20,9 @@ const ClientDealsDirect = () => {
   const router = useRouter();
   const [selectedClient, setSelectedClient] = useState('');
   const [recommendations, setRecommendations] = useState<any>(null);
+  const [journalHistory, setJournalHistory] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [journalLoading, setJournalLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [clients] = useState([
     { id: 'client_001', name: 'Client 001', email: 'client001@example.com' },
@@ -43,11 +46,26 @@ const ClientDealsDirect = () => {
   }, []);
 
   useEffect(() => {
-    // Automatically load recommendations when client is selected
+    // Automatically load recommendations and journal when client is selected
     if (selectedClient) {
       loadRecommendations();
+      loadJournalHistory();
     }
   }, [selectedClient]);
+
+  const loadJournalHistory = async () => {
+    if (!selectedClient) return;
+    
+    setJournalLoading(true);
+    try {
+      const history = await getClientJournalHistory(selectedClient);
+      setJournalHistory(history);
+    } catch (err) {
+      console.error('Error loading journal history:', err);
+    } finally {
+      setJournalLoading(false);
+    }
+  };
 
   const loadRecommendations = async () => {
     if (!selectedClient) return;
@@ -148,6 +166,68 @@ const ClientDealsDirect = () => {
             </div>
           )}
         </div>
+        
+        {/* Journal History Section */}
+        {selectedClient && (
+          <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              📋 Client Journal History
+            </h2>
+            
+            {journalLoading ? (
+              <div className="flex justify-center items-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mr-3"></div>
+                <span className="text-gray-600">Loading journal history...</span>
+              </div>
+            ) : (
+              <>
+                <div className="bg-purple-50 rounded-lg p-4 mb-4">
+                  <p className="text-sm text-purple-700">
+                    <strong>Client:</strong> {clients.find(c => c.id === selectedClient)?.name}<br/>
+                    <strong>Email:</strong> {clients.find(c => c.id === selectedClient)?.email}<br/>
+                    <strong>Total Journal Entries:</strong> {journalHistory.length}
+                  </p>
+                </div>
+                
+                {/* Journal Entries as Paragraphs */}
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-3">Visit History</h3>
+                  {journalHistory.length === 0 ? (
+                    <div className="text-center py-8 text-gray-500">
+                      <p>No journal entries found for this client.</p>
+                    </div>
+                  ) : (
+                    journalHistory.map((entry: any, index: number) => (
+                      <div key={index} className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                        <div className="flex justify-between items-start mb-2">
+                          <div className="flex-1">
+                            <h4 className="font-semibold text-gray-900">
+                              Journal Entry
+                            </h4>
+                            <p className="text-sm text-gray-600 mt-1">
+                              {entry.date || 'No date'}
+                            </p>
+                            <p className="text-sm text-gray-700 mt-2">
+                              {entry.text || 'No description available'}
+                            </p>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-xs text-gray-500">
+                              Client: {entry.client_id}
+                            </p>
+                            <p className="text-xs text-gray-500">
+                              Business: {entry.business_id}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </>
+            )}
+          </div>
+        )}
         
         {/* Results - Only Personalized Deals */}
         {loading && (

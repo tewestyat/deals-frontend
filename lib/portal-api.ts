@@ -1,4 +1,4 @@
-// API functions for the business portal
+// API functions for business portal
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://dealsuggestionbot-production.up.railway.app';
 
@@ -263,6 +263,27 @@ export async function getDealRecommendations(businessId: string): Promise<AIReco
   } catch (error) {
     console.error('🔥 Error calling Railway API:', error);
     throw error;
+  }
+}
+
+// Get client journal history from backend
+export async function getClientJournalHistory(clientId: string): Promise<any[]> {
+  try {
+    console.log('🔥 Fetching journal history for client:', clientId);
+    
+    const response = await fetch(`${API_BASE_URL}/api/journal-entries?client_id=${clientId}`);
+    
+    if (!response.ok) {
+      throw new Error(`Failed to get client journal history: ${response.status} ${response.statusText}`);
+    }
+    
+    const data = await response.json();
+    console.log('🔥 Journal entries received:', data);
+    
+    return data || [];
+  } catch (error) {
+    console.error('🔥 Error fetching client journal history:', error);
+    return [];
   }
 }
 
